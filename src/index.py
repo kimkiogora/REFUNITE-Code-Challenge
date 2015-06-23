@@ -6,7 +6,6 @@ from RedisLib import RCache
 import urllib2
 import sys
 import time
-import itertools
 
 app = Flask(__name__)
 
@@ -93,7 +92,7 @@ def search(name):
                             'person': '%s ' % name,
                             'status': 'success',
                             #'friends': persons_friends,
-                            'people_you_may_know': pymk,
+                            'people_(s)he_may_know': pymk,
                         }
                         break
 
@@ -107,8 +106,9 @@ def search(name):
                             if name in sugg_list: sugg_list.remove(name)
                             other_p.append(sugg_list)
 
+                    response['status'] = 'success'
                     response['message'] = '%s found' % name
-                    response['people_you_may_know'] = other_p
+                    response['people_(s)he_may_know'] = other_p
             except:
                 response = {'error': '' % sys.exc_info()[0]}
         else:
@@ -117,6 +117,7 @@ def search(name):
         delta = end - start_time
 
         response['time_taken_to_respond'] = "%.2f sec" % delta
+
     return json.dumps(response)
 
 
