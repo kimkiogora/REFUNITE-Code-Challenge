@@ -9,3 +9,12 @@ WebService - developed using the awesome Flask, found here http://flask.pocoo.or
 Python 2.7 & > - http://www.python.org 
 
 Redis for python - sudo pip install redis, found here https://pypi.python.org/pypi/redis
+
+Sample Test
+------------
+elinks -dump http://localhost:5000/refunite/api/v1/search/Lily%20Charlson
+
+Response
+----------
+{"status": "Lily Charlson was not found", "message": "Did you mean {} ?","time_taken_to_respond": "0.30 sec"}
+
