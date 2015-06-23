@@ -106,8 +106,8 @@ def search(name):
                             if name in sugg_list: sugg_list.remove(name)
                             other_p.append(sugg_list)
 
+                    response['person'] = '%s ' % name
                     response['status'] = 'success'
-                    response['message'] = '%s found' % name
                     response['people_(s)he_may_know'] = other_p
             except:
                 response = {'error': '' % sys.exc_info()[0]}
