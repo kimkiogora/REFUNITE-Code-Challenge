@@ -25,9 +25,13 @@ def people_you_may_know(name, list_y):
                         data.append(z)
     return sorted(data)
 
-
+"Find people kim may know"
 #print people_you_may_know('kim', list_m)
+"Find people john may know"
 #print people_you_may_know('john', list_m)
+"Find people muller may know"
 #print people_you_may_know('muller', list_m)
+"Find people patrick may know"
 #print people_you_may_know('patrick', list_m)
+"Find people linda may know"
 print people_you_may_know('linda', list_m)
