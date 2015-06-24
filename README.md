@@ -12,6 +12,12 @@ Redis for python ( scaling and what not ) - sudo pip install redis, found here h
 
 Redis Server - Ubuntu, use apt-get install redis
 
+How to setup
+------------
+Install Flask by following instructions from their website. Next, install Redis Server and the redis component for Python ( using pip or any other alternative source). The packages are available from their website. Finally, download the zip for ZEFUNITE-Code-Challenge, extract it anywhere on your machine,navigate to the src folder and run index.py, for example python index.py. By default, flask will use port 5000. Use the below sample of names,...'Madeline Turner', 'Sophia Goldman', 'Allison Carey', 'Chloe Higgins', 'Zoe Cramer'
+
+Example, in your browser,type http://localhost:5000/refunite/api/v1/search/Zoe Cramer
+
 Sample Test
 ------------
 elinks -dump http://localhost:5000/refunite/api/v1/search/Lily%20Charlson
