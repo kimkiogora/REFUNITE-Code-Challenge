@@ -92,6 +92,9 @@ def search(name):
             response['person'] = '%s ' % name
             response['status'] = 'success'
             response['people_(s)he_may_know'] = suggestion_list[name]
+            end = time.time()
+            delta = end - start_time
+            response['time_taken_to_respond'] = "%.2f sec" % delta
             return json.dumps(response)
 
     user_data = redis.pop('people_list')
