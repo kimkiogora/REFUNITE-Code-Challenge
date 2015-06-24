@@ -14,17 +14,18 @@ listx = {
 
 pickled_object = pickle.dumps(listx)
 
-#redis.push('test', pickled_object);
+#Once in the cache, comment out this line
+redis.push('test', pickled_object);
 
 #redis_cache_list = pickle.loads(redis.pop('people_friend_list'))
-#redis_cache_list = pickle.loads(redis.pop('test'))
+redis_cache_list = pickle.loads(redis.pop('test'))
 
-#print redis_cache_list.keys()
+print redis_cache_list.keys()
 
-redis_cache_list = pickle.loads(redis.pop('people_list'))
+#redis_cache_list = pickle.loads(redis.pop('people_list'))
 
-listd = []
-for i in redis_cache_list:
-    if "Samantha" in i:
-        listd.append(i)
-print listd
+#listd = []
+#for i in redis_cache_list:
+#    if "Samantha" in i:
+#        listd.append(i)
+#print listd
