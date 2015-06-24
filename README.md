@@ -2,6 +2,21 @@
 A simple search engine that improves its results by learning from past user behaviour (previous search queries and profile views)
 Create a 'people you may know' feature. Next to each recommended profile, indicate the reason for being selected
 
+Design
+--------
+Think of a person, lets call him Kim. Kim has X,Y, Z to N friends. Each of Kim's friends follows the same pattern as well, having friends M,N,O to N. Its is therefore likely that Kim may know his/her friends friends. To put this in a logical way, consider the persons and their friends below,
+
+Kim - [ X ,Y , Z ]
+
+X - [ M,N,O ]
+
+Y - [ I,J,K ]
+
+Z - [ A,B,C ]
+
+Therefore, Kim can be said to may be know [M,N,O,I,J,K,A,B,C] through [ X,Y,Z ]
+
+
 Technology
 ----------
 WebService - developed using the awesome Flask, found here http://flask.pocoo.org/
@@ -14,7 +29,7 @@ Redis Server - Ubuntu, use apt-get install redis
 
 How to setup
 ------------
-Install Flask by following instructions from their website. Next, install Redis Server and the redis component for Python ( using pip or any other alternative source). The packages are available from their website. Finally, download the zip for ZEFUNITE-Code-Challenge, extract it anywhere on your machine,navigate to the src folder and run index.py, for example python index.py. By default, flask will use port 5000. Use the below sample of names,...'Madeline Turner', 'Sophia Goldman', 'Allison Carey', 'Chloe Higgins', 'Zoe Cramer'
+Install Flask by following instructions from their website. Next, install Redis Server and the redis component for Python ( using pip or any other alternative source). The packages are available from their website. Finally, download the zip for REFUNITE-Code-Challenge, extract it anywhere on your machine,navigate to the src folder and run index.py, for example python index.py. By default, flask will use port 5000. Use the below sample of names,...'Madeline Turner', 'Sophia Goldman', 'Allison Carey', 'Chloe Higgins', 'Zoe Cramer'
 
 Example, in your browser,type http://localhost:5000/refunite/api/v1/search/Zoe Cramer
 
