@@ -14,8 +14,10 @@ Y - [ I,J,K ]
 
 Z - [ A,B,C ]
 
+...and so on
+
 Therefore, Kim can be said to possibly know [M,N,O,I,J,K,A,B,C to N] through [ X,Y,Z to N]....
-Why Python ? Data structures are easy to manipulate, for example merging lists with little effort, dynamic creationas well, speed, broadness (so many libraries). Redis improves the processing and response time. By cacheing redundant data we can effectively spend more time on data we do not have. 
+Why Python ? Flask is just amaizing, plus python make data structures easy to manipulate, for example merging lists with little effort in addition there is speed of processing and so many libraries. Redis improves the processing and response time. By cacheing redundant data we can effectively spend more time on analysis data we do not have. 
 
 The sample code for this is in the script, people-you-may-know.py available from here, https://github.com/kimkiogora/REFUNITE-Code-Challenge/blob/master/people-you-may-know.py
 
