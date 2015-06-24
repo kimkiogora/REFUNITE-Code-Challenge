@@ -24,6 +24,7 @@ redis = RCache('localhost', 6379)
 def index():
     return "Usage: Flask Search Sample"
 
+
 def suggested_friends(global_friend_list, related_friends):
     """
     Function to suggest friends ( people you may know )
@@ -76,75 +77,90 @@ def process_data(name, person_list, global_friends_list):
         final_response = other_p
     return final_response
 
+
 @app.route("/refunite/api/v1/search/<name>", methods=['GET'])
 def search(name):
     global response
     response = {}
-    if name is None or len(name) == 0:
-        data = {
-            'status': 'failed',
-            'message': 'Provide a name to search'
-        }
-        response = data
-    else:
-        "Process data here"
-        start_time = time.time()
-        user_data = redis.pop('people_list')
-        if user_data is None:
-            "Data not in redis, may be the first time search is being done" \
-                "Iterate, local json url, http://localhost/people.json"
-            try:
-                url_conn = urllib2.urlopen(data_url)
-                json_raw = url_conn.read()
-                resp = json.loads(json_raw)
+    "Process data here"
+    start_time = time.time()
 
-                "Work on the data here" \
-                    "Create associated lists then return appropriate response"
-                person_list = []
-                global_friends_list = {}
+    "Locate the stack [containing people (s)he may know] for this person"
+    people_suggested = redis.pop('suggestion_list')
+    if people_suggested is not None:
+        suggestion_list = pickle.loads(people_suggested)
+        if name in suggestion_list.keys():
+            response['person'] = '%s ' % name
+            response['status'] = 'success'
+            response['people_(s)he_may_know'] = suggestion_list[name]
+            return json.dumps(response)
 
-                for person in resp['result']:
-                    person_is = person['name']
-                    friends = person['friends']
-                    person_list.append(person_is)
-                    fl = []
-                    for v in friends:
-                        fl.append(v['name'])
-                    global_friends_list[person_is] = fl
+    user_data = redis.pop('people_list')
+    if user_data is None:
+        "Data not in redis, may be the first time search is being done" \
+            "Iterate, local json url, http://localhost/people.json"
+        try:
+            url_conn = urllib2.urlopen(data_url)
+            json_raw = url_conn.read()
+            resp = json.loads(json_raw)
 
-                "Push to redis for cache"
-                redis.push('people_list', pickle.dumps(person_list))
-                redis.push('people_friend_list', pickle.dumps(global_friends_list))
+            "Work on the data here" \
+                "Filter, map-reduce then return appropriate response"
+            person_list = []
+            global_friends_list = {}
 
-                p_resp = process_data(name,person_list, global_friends_list)
-                response['person'] = '%s ' % name
-                response['status'] = 'success'
-                response['people_(s)he_may_know'] = p_resp
-            except:
-                response = {'error': '' % sys.exc_info()[0]}
-        else:
-            global_friends_list = pickle.loads(redis.pop('people_friend_list'))
-            person_list = pickle.loads(user_data)
+            for person in resp['result']:
+                person_is = person['name']
+                friends = person['friends']
+                person_list.append(person_is)
+                fl = []
+                for v in friends:
+                    fl.append(v['name'])
+                global_friends_list[person_is] = fl
+
+            "Push to redis for cache"
+            redis.push('people_list', pickle.dumps(person_list))
+            redis.push('people_friend_list', pickle.dumps(global_friends_list))
+
             p_resp = process_data(name, person_list, global_friends_list)
+            response['person'] = '%s ' % name
+            response['status'] = 'success'
+            response['people_(s)he_may_know'] = p_resp
+        except:
+            response = {'error': '' % sys.exc_info()[0]}
+    else:
+        global_friends_list = pickle.loads(redis.pop('people_friend_list'))
+        person_list = pickle.loads(user_data)
+        p_resp = process_data(name, person_list, global_friends_list)
 
-            did_you_mean = []
-            if len(p_resp) <= 0:
-                for i in person_list:
-                    if name.lower() in i.lower():
-                        if i not in did_you_mean:
-                            did_you_mean.append(i)
-                response['person'] = '%s ' % name
-                response['status'] = 'Nothing found'
-                response['did_you_mean'] = did_you_mean
+        did_you_mean = []
+        if len(p_resp) <= 0:
+            for i in person_list:
+                if name.lower() in i.lower():
+                    if i not in did_you_mean:
+                        did_you_mean.append(i)
+            response['person'] = '%s ' % name
+            response['status'] = 'Nothing found'
+            response['did_you_mean'] = did_you_mean
+        else:
+            "Push to redis stack"
+            people_suggested = redis.pop('suggestion_list')
+            global new_suggestion_list
+            new_suggestion_list = {}
+            if people_suggested is not None:
+                new_suggestion_list = pickle.loads(people_suggested)
+                new_suggestion_list[name] = p_resp
             else:
-                response['person'] = '%s ' % name
-                response['status'] = 'success'
-                response['people_(s)he_may_know'] = p_resp
-        end = time.time()
-        delta = end - start_time
+                new_suggestion_list = {name: p_resp}
+            redis.push('suggestion_list', pickle.dumps(new_suggestion_list))
+            "Return response"
+            response['person'] = '%s ' % name
+            response['status'] = 'success'
+            response['people_(s)he_may_know'] = p_resp
+    end = time.time()
+    delta = end - start_time
 
-        response['time_taken_to_respond'] = "%.2f sec" % delta
-
+    response['time_taken_to_respond'] = "%.2f sec" % delta
     return json.dumps(response)
 
 "Instantiate the application"
