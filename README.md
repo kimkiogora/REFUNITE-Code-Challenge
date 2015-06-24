@@ -22,6 +22,9 @@ Failure
 
 {"status": "Nothing found", "person": "Peyton ", "did_you_mean": ["Peyton Goodman", "Peyton Vance", "Peyton Gilbert", "Peyton Hoggarth", "Peyton Wainwright", "Peyton Miller".....], "time_taken_to_respond": "0.14 sec"}
 
+
+elinks -dump http://localhost:5000/refunite/api/v1/search/Peyton%20Hardman
+
 Success
 
 {"status": "success", "person": "Peyton Hardman ", "time_taken_to_respond": "0.13 sec", "people_(s)he_may_know": ["Emma Wainwright", "Julia Chapman", "Taylor Vance", "Payton Molligan"]}
