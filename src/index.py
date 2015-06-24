@@ -99,7 +99,7 @@ def search(name):
                 resp = json.loads(json_raw)
 
                 "Work on the data here" \
-                    "Filter, map-reduce then return appropriate response"
+                    "Create associated lists then return appropriate response"
                 person_list = []
                 global_friends_list = {}
 
