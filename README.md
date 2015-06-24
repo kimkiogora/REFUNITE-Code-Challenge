@@ -17,7 +17,7 @@ Z - [ A,B,C ]
 Therefore, Kim can be said to possibly know [M,N,O,I,J,K,A,B,C to N] through [ X,Y,Z to N]....
 Why Python ? Data structures are easy to manipulate, for example merging lists with little effort, dynamic creationas well, speed, broadness (so many libraries). Redis improves the processing and response time. By cacheing redundant data we can effectively spend more time on data we do not have. 
 
-The sample code for this is in the script, people-you-may-know.py
+The sample code for this is in the script, people-you-may-know.py available from here, https://github.com/kimkiogora/REFUNITE-Code-Challenge/blob/master/people-you-may-know.py
 
 Technology
 ----------
