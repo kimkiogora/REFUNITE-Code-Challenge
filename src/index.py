@@ -7,7 +7,6 @@ import urllib2
 import sys
 import time
 import pickle
-import re
 
 app = Flask(__name__)
 
@@ -105,7 +104,7 @@ def search(name):
             resp = json.loads(json_raw)
 
             "Work on the data here" \
-                "Filter, map-reduce then return appropriate response"
+                "Filter then return appropriate response"
             person_list = []
             global_friends_list = {}
 
@@ -143,7 +142,7 @@ def search(name):
             response['status'] = 'Nothing found'
             response['did_you_mean'] = did_you_mean
         else:
-            "Push to redis stack"
+            "Push to redis stack, for faster lookup"
             people_suggested = redis.pop('suggestion_list')
             global new_suggestion_list
             new_suggestion_list = {}
