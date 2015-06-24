@@ -69,9 +69,9 @@ def process_data(name, person_list, global_friends_list):
         other_p = []
         for v in global_friends_list.keys():
             if name in global_friends_list[v]:
-                sugg_list = global_friends_list[v]
-                if name in sugg_list: sugg_list.remove(name)
-                for item in sugg_list:
+                suggestion_list = global_friends_list[v]
+                if name in suggestion_list: suggestion_list.remove(name)
+                for item in suggestion_list:
                     other_p.append(item)
         final_response = other_p
     return final_response
