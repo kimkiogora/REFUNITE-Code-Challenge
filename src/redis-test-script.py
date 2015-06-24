@@ -1,4 +1,4 @@
-#This is a smaple script to test RCache Library
+#This is a sample script to test RCache Library
 #Author <kimkiogora@gmail.com>
 
 from RedisLib import RCache
