@@ -14,7 +14,7 @@ Y - [ I,J,K ]
 
 Z - [ A,B,C ]
 
-Therefore, Kim can be said to may be know [M,N,O,I,J,K,A,B,C] through [ X,Y,Z ]
+Therefore, Kim can be said to possibly know [M,N,O,I,J,K,A,B,C to N] through [ X,Y,Z to N]
 
 
 Technology
