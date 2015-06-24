@@ -76,6 +76,14 @@ def process_data(name, person_list, global_friends_list):
         final_response = other_p
     return final_response
 
+def get_relation(global_friends_list, names):
+    relation = []
+    for name in names:
+        for v in global_friends_list.keys():
+            if name in global_friends_list[v]:
+                if v not in relation:
+                    relation.append(v)
+    return relation
 
 @app.route("/refunite/api/v1/search/<name>", methods=['GET'])
 def search(name):
@@ -88,10 +96,12 @@ def search(name):
     people_suggested = redis.pop('suggestion_list')
     if people_suggested is not None:
         suggestion_list = pickle.loads(people_suggested)
+        global_friends_list = pickle.loads(redis.pop('people_friend_list'))
         if name in suggestion_list.keys():
             response['person'] = '%s ' % name
             response['status'] = 'success'
             response['people_(s)he_may_know'] = suggestion_list[name]
+            response['association'] = get_relation(global_friends_list,suggestion_list[name])
             end = time.time()
             delta = end - start_time
             response['time_taken_to_respond'] = "%.2f sec" % delta
@@ -128,6 +138,7 @@ def search(name):
             response['person'] = '%s ' % name
             response['status'] = 'success'
             response['people_(s)he_may_know'] = p_resp
+            response['association'] = get_relation(global_friends_list,p_resp)
         except:
             response = {'error': '' % sys.exc_info()[0]}
     else:
@@ -159,9 +170,10 @@ def search(name):
             response['person'] = '%s ' % name
             response['status'] = 'success'
             response['people_(s)he_may_know'] = p_resp
+            response['association'] = get_relation(global_friends_list, p_resp)
+
     end = time.time()
     delta = end - start_time
-
     response['time_taken_to_respond'] = "%.2f sec" % delta
     return json.dumps(response)
 
