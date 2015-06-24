@@ -8,7 +8,9 @@ WebService - developed using the awesome Flask, found here http://flask.pocoo.or
 
 Python 2.7 & > - http://www.python.org 
 
-Redis for python - sudo pip install redis, found here https://pypi.python.org/pypi/redis
+Redis for python ( scaling and what not ) - sudo pip install redis, found here https://pypi.python.org/pypi/redis
+
+Redis Server - Ubuntu, use apt-get install redis
 
 Sample Test
 ------------
